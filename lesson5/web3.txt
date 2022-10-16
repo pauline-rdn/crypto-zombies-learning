@@ -1,0 +1,43 @@
+Le réseau Ethereum est fait de nœuds, dont chacun contient une copie de la blockchain. 
+Quand vous voulez appeler une fonction d'un smart contract, vous avez besoin de faire une demande à l'un de ces nœuds en lui indiquant :
+- adresse du smart contract
+- fonction que vous voulez appeler
+
+Les nœuds Ethereum parlent seulement un langage appelé JSON-RPC.
+
+Dépendamment de votre environnement de travail, vous pouvez ajouter Web3.js en utilisant la plupart des gestionnaires de paquets :
+
+// Avec NPM
+npm install web3
+
+// Avec Yarn
+yarn add web3
+
+// Avec Bower
+bower install web3
+
+La première chose dont nous avons besoin, c'est d'un fournisseur (provider) Web3.
+Configurer un fournisseur Web3 indique à notre code avec quel nœud nous devrions communiquer pour traiter nos lectures et écritures. 
+C'est un peu comme configurer l'URL d'un serveur web distant pour des appels API d'une application web classique.
+
+Infura est un service qui a plusieurs nœuds Ethereum avec une fonctionnalité de cache pour des lectures plus rapides, 
+que vous pouvez accéder gratuitement depuis leur API. 
+En utilisant Infura comme fournisseur, vous pouvez envoyer et recevoir des messages de la blockchain Ethereum de manière fiable, 
+sans avoir à vous occuper de votre propre nœud.
+
+Web3.js va avoir besoin de 2 choses pour pouvoir communiquer avec notre contrat : son adresse et son ABI.
+
+call est utilisé pour les fonctions view etpure. C'est exécuté seulement sur le nœud local, et cela ne va pas créer de transaction sur la blockchain.
+send va créer une transaction et changer l'état des données sur la blockchain. Vous aurez besoin d'utiliser send pour toutes les fonctions qui ne sont pas view ou pure.
+
+Afin de filtrer les évènements et écouter seulement les changements liés à l'utilisateur actuel, 
+notre contrat Solidity devra utiliser le mot clé indexed.
+Utiliser les champs event et indexed est une bonne habitude pour écouter les changements de votre contrat 
+et les refléter dans le front-end de votre application.
+
+Nous pouvons interroger les évènements passés en utilisant getPastEvents, 
+et utiliser les filtres fromBlock et toBlock pour indiquer à Solidity l'intervalle de temps pour récupérer nos évènements.
+Utiliser des évènements est beaucoup moins cher en terme de gas.
+En contrepartie, les évènements ne sont pas lisibles depuis le smart contract. 
+Mais c'est cas d'utilisation important à retenir si vous voulez stocker de l'information avec un historique sur la blockchain 
+afin de le lire depuis le front-end de votre application.

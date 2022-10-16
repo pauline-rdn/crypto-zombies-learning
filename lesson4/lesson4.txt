@@ -1,0 +1,32 @@
+1. Il existent des modificateurs de visibilité qui contrôlent quand et depuis où la fonction peut être appelée : 
+private veut dire que la fonction ne peut être appelée que par les autres fonctions à l'intérieur du contrat; 
+internal est comme private mais en plus, elle peut être appelée par les contrats qui héritent de celui-ci; 
+avec external, la fonction ne peut être appelée que depuis l'extérieur du contrat; 
+et enfin avec public, elle peut être appelée depuis n'importe où, à l'intérieur et à l'extérieur.
+
+2. Il existe aussi des modificateurs d'état, qui nous indiquent comment la fonction interagit avec la BlockChain : 
+view nous indique qu'en exécutant cette fonction, aucune donnée ne saura sauvegardée/modifiée. 
+pure nous indique que non seulement aucune donnée ne saura sauvée sur la BlockChain, 
+mais qu'en plus aucune donnée de la BlockChain ne sera lue. 
+Ces 2 fonctions ne coûtent pas de gas si elles sont appelées depuis l'extérieur du contrat 
+(mais elle coûtent du gas si elles sont appelées intérieurement par une autre fonction).
+
+3. Ensuite nous avons les modificateurs personnalisés.
+Nous avons pu déterminer des logiques personnalisées pour ceux-ci, afin de choisir de quelles manières ils affectent une fonction.
+
+Une des choses qui rend Solidity et Ethereum vraiment cool est le modificateur payable.
+Une fonction payable est une fonction spéciale qui peut recevoir des Ether.
+Si une fonction n'est pas marquée payable et que vous essayez de lui envoyer des Ether, 
+la fonction rejettera votre transaction.
+
+Après avoir envoyé des Ether à un contrat, ils sont stockés dans le compte Ethereum du contrat, et resteront ici 
+- à part si vous ajoutez une fonction pour retirer les Ether du contrat.
+
+En Ethereum, quand vous appelez la fonction d'un contrat, vous diffusez une transaction à un nœud ou à des nœuds du réseau. 
+Les nœuds du réseau vont ensuite collecter plusieurs transactions, vont essayer d'être le premier à résoudre un problème mathématique 
+qui demande un calcul intensif appelé "Proof of Work", et vont ensuite diffuser ce groupe de transactions avec leur PoW 
+dans un bloc au reste du réseau.
+Quand un nœud a résolu un PoW, les autres nœuds arrêtent d'essayer de résoudre le PoW, 
+ils vérifient que la liste des transactions de l'autre nœud soit valide, 
+acceptent le bloc et passent à la résolution du bloc suivant.
+Cela rend notre fonction nombre aléatoire exploitable.

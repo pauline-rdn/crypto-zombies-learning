@@ -1,0 +1,19 @@
+// Un mappage est fondamentalement un stockage de valeur-clé pour stocker et rechercher des données.
+
+// La variable globale msg.sender fait référence à l'address de la personne (ou du smart contract) qui a appelée la fonction actuelle.
+En Solidity, l'exécution d'une fonction nécessite obligatoirement un appel extérieur. 
+Un contrat va rester dans la blockchain à ne rien faire jusqu'à ce que quelqu'un appelle une de ses fonctions. 
+Il y aura toujours un msg.sender.
+Utiliser msg.sender apporte de la sécurité à la blockchain Ethereum - 
+La seule manière pour quelqu'un de modifier les données d'un autre serait de lui voler sa clé privée, associée à son adresse Ethereum.
+
+// En Solidity, il y a deux endroits pour stocker les variables - dans le storage (stockage) ou dans la memory (mémoire).
+Les variables d'état (déclarées en dehors des fonctions) sont par défaut storage et écrites de manière permanente dans la blockchain, 
+les variables déclarées à l'intérieur des fonctions sont memory et disparaissent quand l'appel à la fonction est terminé.
+Cependant, il peut arriver d'utiliser ces mots clés, surtout quand on utilise des structures et des tableaux à l'intérieur de fonctions.
+
+// internal est similaire à private, à l'exception qu'elle est aussi accessible aux contrats qui héritent de ce contrat.
+external est similaire à public, à l'exception que ces fonctions peuvent SEULEMENT être appelées à l'extérieur du contrat -
+elles ne peuvent pas être appelées par d'autres fonctions à l'intérieur du contrat. 
+
+// RAPPEL - * uint est un alias pour uint256

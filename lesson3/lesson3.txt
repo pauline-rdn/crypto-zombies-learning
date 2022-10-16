@@ -1,0 +1,53 @@
+ // Une fois que vous avez déployé un contrat Ethereum, il est immuable, 
+ ce qui veut dire qu'il ne pourra plus jamais être modifié ou mis à jour.
+
+Le code que vous allez déployer initialement pour un contrat restera de manière permanente sur la blockchain. 
+C'est pour cela que la sécurité est une préoccupation si importante en Solidity. 
+S'il y a une faille dans le code de votre contrat, il n'y aucun moyen pour vous de le patcher plus tard. 
+Vous devrez dire à vos utilisateurs d'utiliser une adresse de contrat différente qui a le correctif.
+
+OpenZeppelin est une bibliothèque de smart contracts sécurisés et approuvés par la communauté (contrats ownable).
+Pour résumer le contrat Ownable fait fondamentalement ceci :
+    - Quand un contrat est créé, son constructeur défini le owner égal à msg.sender (la personne qui le déploie)
+    - Il ajoute un modificateur onlyOwner, qui permet de restreindre l'accès à certaines fonctions à seulement le owner
+    - Il vous permet de transférer le contrat à un nouvel owner
+
+Gas (gaz) - le carburant des DApps Ethereum / 
+En Solidity, vos utilisateurs devront payer à chaque fois qu'ils exécutent une fonction de votre DApp avec une monnaie appelée gas. 
+Les utilisateurs achètent du gas avec de l'Ether (la monnaie d'Ethereum), 
+vos utilisateurs doivent donc dépenser de l'ETH pour exécuter des fonctions de votre DApp.
+Le coût en gas est basé sur la quantité de ressources informatiques nécessaires pour effectuer l'opération.
+
+Les créateurs d'Ethereum ont voulu être sur que personne ne pourrait bloquer le réseau avec une boucle infinie, 
+ou s'accaparer de toutes les ressources du réseau avec des calculs vraiment complexes. 
+C'est pour cela que les transactions ne sont pas gratuites, 
+et que les utilisateurs doivent payer pour faire des calculs et pour le stockage.
+
+Les fonctions view ne coûtent pas de gas quand elles sont appelées extérieurement par un utilisateur.
+
+C'est parce que les fonctions view ne changent rien sur la blockchain - elles lisent seulement des données. 
+Marquer une fonction avec view indique à web3.js qu'il a seulement besoin d'interroger votre nœud local d'Ethereum 
+pour faire marcher la fonction, et il n'a pas besoin de créer une transaction sur la blockchain.
+
+Si une fonction view est appelée intérieurement à partir d'une autre fonction du même contrat qui n'est pas une fonction view, 
+elle coûtera du gas. C'est parce que l'autre fonction va créer une transaction sur Ethereum, 
+et aura besoin d'être vérifiée par chaque nœud. 
+Ainsi les fonctions view sont gratuites seulement quand elles sont appelées extérieurement.
+
+Une des opérations les plus coûteuse en Solidity est d'utiliser storage.
+C'est parce qu'à chaque fois que vous écrivez ou changez un bout d'information, 
+c'est écrit de manière permanente sur la blockchain. Pour toujours ! 
+Des milliers de nœuds à travers le monde vont stocker cette information sur leurs disques durs, 
+et cette quantité d'information continue de grandir au fur et à mesure que la blockchain grandie.
+
+Dans la plupart des langages de programmation, faire une boucle sur un grand ensemble de données est coûteux. 
+Mais en Solidity, c'est beaucoup moins cher que d'utiliser storage s'il y a une fonction external view, puisque view ne coûte aucun gas.
+
+
+//
+Nous avons ajouté un moyen de mettre à jour notre contrat CryptoKitties
+Nous avons appris à protéger les fonctions principales avec onlyOwner
+Nous avons appris ce qu'est le gas et son optimisation
+Nous avons ajouté niveau et compte à rebours à nos zombies
+Nous avons maintenant des fonctions pour mettre à jour le nom d'un zombie et son ADN une fois que le zombie à un certain niveau
+Et enfin, nous avons maintenant une fonction pour renvoyer l'armée de zombie d'un utilisateur

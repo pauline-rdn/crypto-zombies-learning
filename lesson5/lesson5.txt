@@ -1,0 +1,27 @@
+un token Ethereum est un smart contract qui suit un ensemble de règles - 
+à savoir, il implémente un ensemble de fonctions standards que tous les autres contrats de token partagent, 
+comme transfer(address _to, uint256 _value) et balanceOf(address _owner).
+
+Le smart contract a habituellement un mappage interne, 
+mapping(address => uint256) balances, qui permet de connaître la balance de chaque adresse.
+
+Un token est simplement un contrat qui permet de connaître combien de ce token chaque personne possède, 
+et qui a certaines fonctions pour permettre aux utilisateurs de transférer leurs tokens à d'autres adresses.
+
+Puisque tous les tokens ERC20 partagent le même ensemble de fonctions avec les mêmes noms, 
+ils peuvent tous être manipulés de la même manière.
+Cela veut dire que si vous construisez une application qui est capable d'interagir avec un token ERC20, 
+elle sera aussi capable d'interagir avec n'importe quel token ERC20. 
+De cette manière, d'autres tokens pourront facilement être ajoutés à votre application sans avoir besoin de personnaliser le code. 
+Vous pourrez simplement rajouter la nouvelle adresse du contrat du token, et boom, votre application pourra utiliser un nouveau token.
+
+On pourrait prendre comme exemple un échange. Quand un échange ajoute un nouveau token ERC20, 
+en vérité il a juste besoin d'ajouter un nouveau smart contract. 
+Les utilisateurs pourront utiliser ce contrat pour envoyer des tokens sur l'adresse de l'échange, 
+et l'échange pourra utiliser ce contrat pour renvoyer des tokens aux utilisateurs quand ils voudront retirer.
+L'échange a simplement besoin d'implémenter une fois la logique de transfert, 
+et quand il veut ajouter un nouveau token ERC20, il suffit simplement d'ajouter l'adresse du nouveau contrat à sa base de donnée.
+
+Il existe un autre standard de token qui est beaucoup plus adapté pour les crypto-collectibles — ce sont les tokens ERC721.
+Les tokens ERC721 ne sont pas interchangeable puisqu'ils sont supposés être unique, et ne sont pas divisibles. 
+Vous pouvez seulement les échanger en entier, et ils ont chacun un ID unique. 
